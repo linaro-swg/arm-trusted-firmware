@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, ARM Limited and Contributors. All rights reserved.
+ * Copyright (c) 2015-2017, ARM Limited and Contributors. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -51,32 +51,24 @@
 #define FIRMWARE_WELCOME_STR		"Booting Trusted Firmware\n"
 
 /*
- * Some of the platform porting definitions use the 'ull' suffix in order to
- * avoid subtle integer overflow errors due to implicit integer type promotion
- * when working with 32-bit values.
- *
- * The TSP linker script includes some of these definitions to define the BL32
- * memory map, but the GNU LD does not support the 'ull' suffix, causing the
- * build process to fail. To solve this problem, the auxiliary macro MAKE_ULL(x)
- * will add the 'ull' suffix only when the macro __LINKER__  is not defined
- * (__LINKER__ is defined in the command line to preprocess the linker script).
- * Constants in the linker script will not have the 'ull' suffix, but this is
- * not a problem since the linker evaluates all constant expressions to 64 bit
- * (assuming the target architecture is 64 bit).
- */
-#ifndef __LINKER__
-  #define MAKE_ULL(x)			x##ull
-#else
-  #define MAKE_ULL(x)			x
-#endif
-
-/*
  * Macros to wrap declarations of deprecated APIs within Trusted Firmware.
  * The callers of these APIs will continue to compile with a warning as long
  * as the build flag ERROR_DEPRECATED is zero.
  */
 #define __warn_deprecated	__attribute__ ((deprecated))
 
+#if LOAD_IMAGE_V2
+#define BL2_IMAGE_DESC {				\
+	.image_id = BL2_IMAGE_ID,			\
+	SET_STATIC_PARAM_HEAD(image_info, PARAM_EP,	\
+		VERSION_2, image_info_t, 0),		\
+	.image_info.image_base = BL2_BASE,		\
+	.image_info.image_max_size = BL2_LIMIT - BL2_BASE,\
+	SET_STATIC_PARAM_HEAD(ep_info, PARAM_EP,	\
+		VERSION_2, entry_point_info_t, SECURE | EXECUTABLE),\
+	.ep_info.pc = BL2_BASE,				\
+}
+#else /* LOAD_IMAGE_V2 */
 #define BL2_IMAGE_DESC {				\
 	.image_id = BL2_IMAGE_ID,			\
 	.image_info.h.version = VERSION_1,		\
@@ -85,6 +77,7 @@
 	.ep_info.h.attr = SET_SEC_STATE(SECURE),	\
 	.ep_info.pc = BL2_BASE				\
 }
+#endif /* LOAD_IMAGE_V2 */
 
 #endif /* __COMMON_DEF_H__ */
 
