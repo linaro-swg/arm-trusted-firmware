@@ -127,12 +127,10 @@ struct mt8173_mcucfg_regs {
 static struct mt8173_mcucfg_regs *const mt8173_mcucfg = (void *)MCUCFG_BASE;
 
 /* cpu boot mode */
-enum {
-	MP0_CPUCFG_64BIT_SHIFT = 12,
-	MP1_CPUCFG_64BIT_SHIFT = 28,
-	MP0_CPUCFG_64BIT = 0xf << MP0_CPUCFG_64BIT_SHIFT,
-	MP1_CPUCFG_64BIT = 0xf << MP1_CPUCFG_64BIT_SHIFT
-};
+#define	MP0_CPUCFG_64BIT_SHIFT 12
+#define	MP1_CPUCFG_64BIT_SHIFT 28
+#define	MP0_CPUCFG_64BIT (0xf << MP0_CPUCFG_64BIT_SHIFT)
+#define	MP1_CPUCFG_64BIT (0xf << MP1_CPUCFG_64BIT_SHIFT)
 
 /* scu related */
 enum {
