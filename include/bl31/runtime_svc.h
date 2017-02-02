@@ -31,6 +31,8 @@
 #ifndef __RUNTIME_SVC_H__
 #define __RUNTIME_SVC_H__
 
+#include <utils.h>
+
 /*******************************************************************************
  * Bit definitions inside the function id as per the SMC calling convention
  ******************************************************************************/
@@ -57,7 +59,7 @@
 #define SMC_64				1
 #define SMC_32				0
 #define SMC_UNK				0xffffffff
-#define SMC_TYPE_FAST			1
+#define SMC_TYPE_FAST			ULL(1)
 #define SMC_TYPE_STD			0
 #define SMC_PREEMPTED		0xfffffffe
 /*******************************************************************************
