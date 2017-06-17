@@ -104,13 +104,6 @@ static uint64_t opteed_sel1_interrupt_handler(uint32_t id,
 	SMC_RET1(&optee_ctx->cpu_ctx, read_elr_el3());
 }
 
-
-static int is_mem_free(uint64_t free_base, size_t free_size,
-		       uint64_t addr, size_t size)
-{
-	return (addr >= free_base) && (addr + size <= free_base + free_size);
-}
-
 /*******************************************************************************
  * OPTEE Dispatcher setup. The OPTEED finds out the OPTEE entrypoint and type
  * (aarch32/aarch64) if not already known and initialises the context for entry
