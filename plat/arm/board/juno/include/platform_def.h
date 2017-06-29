@@ -76,10 +76,10 @@
 #ifdef IMAGE_BL31
 # if CSS_USE_SCMI_DRIVER
 #  define PLAT_ARM_MMAP_ENTRIES		7
-#  define MAX_XLAT_TABLES		3
+#  define MAX_XLAT_TABLES		4
 # else
 #  define PLAT_ARM_MMAP_ENTRIES		6
-#  define MAX_XLAT_TABLES		2
+#  define MAX_XLAT_TABLES		3
 # endif
 #endif
 
